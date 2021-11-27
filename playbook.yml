@@ -15,9 +15,9 @@
         state: present
 
     - name: Install git
+      become: yes
       apt:
        name: git
-       become: yes
        state: present
        update_cache: yes
 
@@ -43,6 +43,7 @@
         dest: /usr/local
 
     - name: extract tomcat packages
+      become: yes
       unarchive:
         src: /usr/local/apache-tomcat-9.0.55.tar.gz
         dest: /usr/local
