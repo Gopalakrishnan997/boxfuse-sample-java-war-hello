@@ -65,15 +65,19 @@
       apt: name=apache2 update_cache=no
    
     - name: copy data files
-      copy: src=index.html dest=/var/www/html/
+      become: yes
+      copy: src=index.html dest=/var/www/html/index.html
 
     - name: stop the service
+      become: yes
       service: name=apache2 state=stopped
 
     - name: copy template file
+      become: yes
       template: src=current.html.j2 dest=/var/www/html/current.html
       notify: 
         - start apache
   handlers:
     - name: start apache
+      become: yes
       service: name=apache2 state=restarted
