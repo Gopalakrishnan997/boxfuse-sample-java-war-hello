@@ -51,6 +51,7 @@
         remote_src: yes
 
     - name: copy war to web apps
+      become: yes
       copy: src=/home/ubuntu/boxfuse/target/hello-1.0.war dest=/usr/local/apache-tomcat-9.0.55/webapps remote_src=yes
 
     - name: stop tomcat services
