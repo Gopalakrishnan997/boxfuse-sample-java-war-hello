@@ -1,0 +1,74 @@
+---
+- hosts: web_portal
+  vars:
+      package1: "openjdk-11-jdk"
+      package2: "maven"
+  tasks:
+    - name: Apt get update
+      apt: update_cache=yes
+
+    - name: Install Java using Ansible
+      become: yes
+      apt:
+        name: "{{ package1 }}"
+        state: present
+
+    - name: Install git
+      apt:
+       name: git
+       state: present
+       update_cache: yes
+
+    - name: checkout git repo
+      ansible.builtin.git:
+        repo: https://github.com/Gopalakrishnan997/boxfuse-sample-java-war-hello.git
+        dest: /home/ubuntu/boxfuse
+
+    - name: Install Maven using Ansible
+      become: yes
+      apt:
+        name: "{{ package2 }}"
+        state: present
+
+    - name: maven clean package
+      command: mvn -f /home/ubuntu/boxfuse/pom.xml clean package
+
+    - name: download tomcat server packages
+      get_url:
+        url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.55/bin/apache-tomcat-9.0.55.tar.gz
+        dest: /usr/local
+
+    - name: extract tomcat packages
+      unarchive:
+        src: /usr/local/apache-tomcat-9.0.55.tar.gz
+        dest: /usr/local
+        remote_src: yes
+
+    - name: Renaming tomcat home
+      command: mv /usr/local/apache-tomcat-9.0.55.tar.gz /usr/local/tomcat
+
+    - name: copy war to web apps
+      copy: src=/home/ubuntu/boxfuse/target/hello-1.0.war dest=/usr/local/apache-tomcat-9.0.55/webapps remote_src=yes
+
+    - name: stop tomcat services
+      shell: nohup /usr/local/apache-tomcat-9.0.55/bin/shutdown.sh &
+
+    - name: start tomcat services
+      shell: nohup /usr/local/apache-tomcat-9.0.55/bin/startup.sh &
+
+    - name: Install Apache2
+      apt: name=apache2 update_cache=no
+   
+    - name: copy data files
+      copy: src=index.html dest=/var/www/html/
+
+    - name: stop the service
+      service: name=apache2 state=stopped
+
+    - name: copy template file
+      template: src=current.html.j2 dest=/var/www/html/current.html
+      notify: 
+        - start apache
+  handlers:
+    - name: start apache
+      service: name=apache2 state=restarted
