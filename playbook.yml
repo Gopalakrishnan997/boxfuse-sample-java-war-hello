@@ -63,6 +63,10 @@
     - name: Install Apache2
       become: yes
       apt: name=apache2 update_cache=no
+      
+    - name: copy data files
+      become: yes
+      copy: src=index.html dest=/var/www/html/index.html
 
     - name: stop the service
       become: yes
