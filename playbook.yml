@@ -17,6 +17,7 @@
     - name: Install git
       apt:
        name: git
+       become: yes
        state: present
        update_cache: yes
 
@@ -32,9 +33,11 @@
         state: present
 
     - name: maven clean package
+      become: yes
       command: mvn -f /home/ubuntu/boxfuse/pom.xml clean package
 
     - name: download tomcat server packages
+      become: yes
       get_url:
         url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.55/bin/apache-tomcat-9.0.55.tar.gz
         dest: /usr/local
