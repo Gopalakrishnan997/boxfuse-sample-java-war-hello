@@ -61,6 +61,7 @@
       shell: nohup /usr/local/apache-tomcat-9.0.55/bin/startup.sh &
 
     - name: Install Apache2
+      become: yes
       apt: name=apache2 update_cache=no
    
     - name: copy data files
