@@ -52,7 +52,7 @@
 
     - name: copy war to web apps
       become: yes
-      copy: src=**/*.war dest=/usr/local/apache-tomcat-9.0.55/webapps
+      copy: src=target/*.war dest=/usr/local/apache-tomcat-9.0.55/webapps
 
     - name: stop tomcat services
       shell: nohup /usr/local/apache-tomcat-9.0.55/bin/shutdown.sh &
