@@ -22,6 +22,7 @@
        update_cache: yes
 
     - name: checkout git repo
+      become: yes
       ansible.builtin.git:
         repo: https://github.com/Gopalakrishnan997/boxfuse-sample-java-war-hello.git
         dest: /home/ubuntu/boxfuse
