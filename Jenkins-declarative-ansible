@@ -6,6 +6,10 @@ pipeline{
                 git 'https://github.com/Gopalakrishnan997/boxfuse-sample-java-war-hello.git'
             }
         }          
-     
+        stage ('maven clean & package Stage') {
+           steps {
+                sh 'mvn -Dmaven.test.failure.ignore=true package'
+           }
+        }
     }
 }
