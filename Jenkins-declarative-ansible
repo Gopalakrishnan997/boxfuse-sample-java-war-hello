@@ -6,12 +6,6 @@ pipeline{
                 git 'https://github.com/Gopalakrishnan997/boxfuse-sample-java-war-hello.git'
             }
         }          
-        stage ('maven clean & package Stage') {
-           steps {
-                withMaven(maven : 'apache-maven-3.8.4') {
-                bat'mvn clean package'
-                }
-           }
-        }
+     
     }
 }
