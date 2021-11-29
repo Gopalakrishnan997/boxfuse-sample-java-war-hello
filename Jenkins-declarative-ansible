@@ -1,0 +1,9 @@
+pipeline{
+    agent any
+    stages{
+        stage("Git Checkout")
+            steps{
+                git 'https://github.com/Gopalakrishnan997/boxfuse-sample-java-war-hello.git'
+            }
+    }
+}
