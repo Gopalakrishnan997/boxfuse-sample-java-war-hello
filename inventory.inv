@@ -47,3 +47,6 @@ node02 ansible_user=ubuntu
 
 [web_portal]
 20.120.93.33 ansible_user=ubuntu
+
+[webservers]
+34.201.72.55 ansible_user=ec2-user 
