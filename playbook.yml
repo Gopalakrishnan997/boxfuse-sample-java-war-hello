@@ -1,5 +1,5 @@
 ---
-- hosts: web_portal
+- hosts: webservices
   vars:
       package1: "openjdk-11-jdk"
       package2: "maven"
